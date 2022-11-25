@@ -1028,7 +1028,7 @@
                 PizZipUtils.getBinaryContent(url, callback)
             },
             generate(msg, rec, add) {
-                let str = this.isComments ? "学生综合素质评价报告高职班.docx" : "学生综合素质评价报告中职班.docx"
+                let str = this.isComments ? "high.docx" : "low.docx"
                 this.loadFile(str, function (error, content) {
                     //抛出读取错误
                     if (error) {throw error}
