@@ -13,6 +13,11 @@
     <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip.js"></script>
     <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip-utils.js"></script>
     <style>
+        /* https://juejin.cn/post/7172039729603412004 */
+        html {
+            filter: grayscale(1);
+        }
+
         .loading {
             position: absolute;
             top: 20px;
@@ -342,7 +347,7 @@
             color: rgba(255, 255, 255, 0.8);
             position: absolute;
             right: 100px;
-            bottom: 80px;
+            bottom: 100px;
             z-index: 10;
             font-family: sans-serif;
             /* text-align: center; */
@@ -361,11 +366,11 @@
         }
 
         h1 {
-            margin-top: 50px;
+            margin-top: 10px;
         }
 
         h2 {
-            margin-top: 50px;
+            margin-top: 40px;
         }
 
         h3,
@@ -375,12 +380,12 @@
         }
 
         h3 {
-            margin-top: 40px;
-            text-transform: uppercase;
+            /* margin-top: 10px; */
+            /* text-transform: uppercase; */
         }
 
         h4 {
-            margin-top: 10px;
+            margin-top: -10px;
         }
 
         .circle {
@@ -388,7 +393,7 @@
             height: 160px;
             position: absolute;
             right: 240px;
-            bottom: 10px;
+            bottom: 30px;
             background: linear-gradient(to top left, rgb(135 116 249), rgb(75 162 237));
             border-radius: 80px;
         }
@@ -398,7 +403,7 @@
             height: 160px;
             position: absolute;
             right: 20px;
-            bottom: 390px;
+            bottom: 410px;
             background: linear-gradient(to top left,
                     rgba(135, 116, 249, 0.9),
                     rgba(75, 162, 237, 0.9));
@@ -474,7 +479,6 @@
         p {
             margin-top: 10px;
         }
-
     </style>
 </head>
 
@@ -552,9 +556,10 @@
     </div>
 
     <div class="card">
-        <h1>君子慎独,不欺暗室,卑以自牧,含章可贞.</h1>
+        <!-- <h1>君子慎独,不欺暗室,卑以自牧,含章可贞.</h1>
         <h2>意: 即使别人看不见、听不见，也要谨慎不苟，不做违反道德法律之事，不负良知，不欺内心。</h2>
-        <h3>《礼记中庸》</h3>
+        <h3>《礼记中庸》</h3> -->
+        <h2>你要写匆匆,就不能只写匆匆,要写,水阔写山重,写飞絮流云西复东,写时光挪移过指缝,要写,金樽对月空,写朝来寒雨晚来风,写几回魂梦与君同,再写,今年花胜去年红,青丝变白发,人生长恨水长东！</h2>
         <h4>2022 / 07 / 31</h4>
     </div>
     <div class="circle"></div>
@@ -1028,7 +1033,7 @@
                 PizZipUtils.getBinaryContent(url, callback)
             },
             generate(msg, rec, add) {
-                let str = this.isComments ? "high.docx" : "low.docx"
+                let str = this.isComments ? "学生综合素质评价报告高职班.docx" : "学生综合素质评价报告中职班.docx"
                 this.loadFile(str, function (error, content) {
                     //抛出读取错误
                     if (error) {throw error}
