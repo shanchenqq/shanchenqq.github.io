@@ -14,9 +14,9 @@
     <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip-utils.js"></script>
     <style>
         /* https://juejin.cn/post/7172039729603412004 */
-/*        html {
-            filter: grayscale(1);
-        }*/
+        /* html {
+                filter: grayscale(1);
+            } */
 
         .loading {
             position: absolute;
@@ -290,11 +290,11 @@
 
         body {
             /* display: flex;
-            justify-content: center;
-            align-items: center; */
-            height: 100%;
-            background: #1D1F20;
-            color: white;
+                justify-content: center;
+                align-items: center; */
+            /* height: 100%;
+                background: #1D1F20;
+                color: white; */
         }
 
         #box {
@@ -411,7 +411,7 @@
         }
 
         body {
-            height: 100vh;
+            /* height: 100vh; */
             background: radial-gradient(circle at 60% 90%,
                     rgba(46, 103, 161, 1),
                     transparent 60%),
@@ -419,6 +419,7 @@
                     rgba(46, 103, 161, 0.8),
                     transparent 25%),
                 #182336;
+            color: white;
         }
 
         /* https://juejin.cn/post/7026531307433754661 */
@@ -534,6 +535,13 @@
         </p>
 
         <p style="color:red;font-weight:bold;">第三步: 先点击获取整合数据,再点击开始制作</p>
+
+        <!-- <div id='show' style='visibility:hidden'> -->
+        <div id='show' style='display:none'>
+            <p v-if='isComments' style='color:green'>当前上传了评语表</p>
+            <p v-else style='color:red'>当前没有上传评语表,请输入班主任姓名: <input type='text' placeholder="班主任姓名" v-model="addInfo.teacher" style='width:85px' /></p>
+        </div>
+
         <span style="color:white;font: 20px bold;" v-if="messages&&(n<=messages.length-1)">当前完成进度: {{ n===-1 ? 0 : Math.floor(100*n/(messages.length-1)) }}%</span>
         <span style="color:yellowgreen;font: 20px bold;" v-if="messages&&(n>=messages.length-1)">
             已经全部完成啦~~~~~~做束光照亮你温暖你~为您节省下来的每一秒都会使我快乐!
@@ -547,10 +555,6 @@
             </div>
         </div>
         <p style="color:#0f0">{{info}}</p>
-        <div id='show' style='visibility:hidden'>
-            <p v-if='isComments' style='color:green'>当前上传了评语表</p>
-            <p v-else style='color:red'>当前没有上传评语表,请输入班主任姓名: <input type='text' placeholder="需要输入班主任姓名" v-model="addInfo.teacher" style='width:50px' /></p>
-        </div>
         <button @click="fetchMessages" class="my_label">获取整合数据</button>&nbsp
         <button @click="initiate" class="my_label">开始制作</button>
     </div>
@@ -590,7 +594,8 @@
         for (let i = 0; i < files.length; i++) {
             const type = files[i].name.split('.')
             //校验拖入文件是否合法
-            if (type.at(-1) !== 'xlsx' && type.at(-1) !== 'xls') {
+            // if (type.at(-1) !== 'xlsx' && type.at(-1) !== 'xls') {
+            if (type[1] !== 'xlsx' && type[1] !== 'xls') {//兼容360浏览器
                 alert('只能选择后缀名是xlsx或者xls的Excel文件拖入')
                 return
             }
