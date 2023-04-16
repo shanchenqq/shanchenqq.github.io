@@ -1,0 +1,483 @@
+/* https://juejin.cn/post/7172039729603412004 */
+/* html {
+            filter: grayscale(1);
+        } */
+body {
+    /* height: 100vh; */
+    background: radial-gradient(
+            circle at 60% 90%,
+            rgba(46, 103, 161, 1),
+            transparent 60%
+        ),
+        radial-gradient(
+            circle at 20px 20px,
+            rgba(46, 103, 161, 0.8),
+            transparent 25%
+        ),
+        #182336;
+    color: white;
+}
+
+.loading {
+    position: absolute;
+    top: 20px;
+    left: 390px;
+}
+
+.loader {
+    display: block;
+    position: relative;
+    height: 20px;
+    width: 86px;
+}
+
+.loading-square {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    top: 0;
+}
+
+.loading-square:nth-child(1) {
+    left: 0;
+    animation: square1 1.5s linear forwards infinite;
+}
+
+.loading-square:nth-child(2) {
+    left: 22px;
+    animation: square2 1.5s linear forwards infinite;
+}
+
+.loading-square:nth-child(3) {
+    left: 44px;
+    animation: square3 1.5s linear forwards infinite;
+}
+
+.loading-square:nth-child(4) {
+    left: 66px;
+    animation: square4 1.5s linear forwards infinite;
+}
+
+@keyframes square1 {
+    0% {
+        background-color: #97c900;
+        transform: translate(0, 0);
+    }
+
+    9.09091% {
+        transform: translate(0, calc(-100% - 2px));
+        background-color: #97c900;
+    }
+
+    18.18182% {
+        transform: translate(calc(100% + 2px), calc(-100% - 2px));
+        background-color: #15668a;
+    }
+
+    27.27273% {
+        transform: translate(calc(100% + 2px), 0);
+    }
+
+    100% {
+        background-color: #15668a;
+        transform: translate(calc(100% + 2px), 0);
+    }
+}
+
+@keyframes square2 {
+    0% {
+        background-color: #15668a;
+        transform: translate(0, 0);
+    }
+
+    18.18182% {
+        transform: translate(0, 0);
+    }
+
+    27.27273% {
+        transform: translate(0, calc(100% + 2px));
+        background-color: #15668a;
+    }
+
+    36.36364% {
+        transform: translate(calc(100% + 2px), calc(100% + 2px));
+        background-color: #d53a33;
+    }
+
+    45.45455% {
+        transform: translate(calc(100% + 2px), 0);
+    }
+
+    100% {
+        background-color: #d53a33;
+        transform: translate(calc(100% + 2px), 0);
+    }
+}
+
+@keyframes square3 {
+    0% {
+        background-color: #d53a33;
+        transform: translate(0, 0);
+    }
+
+    36.36364% {
+        transform: translate(0, 0);
+    }
+
+    45.45455% {
+        transform: translate(0, calc(-100% - 2px));
+        background-color: #d53a33;
+    }
+
+    54.54545% {
+        transform: translate(calc(100% + 2px), calc(-100% - 2px));
+        background-color: #e79c10;
+    }
+
+    63.63636% {
+        transform: translate(calc(100% + 2px), 0);
+    }
+
+    100% {
+        background-color: #e79c10;
+        transform: translate(calc(100% + 2px), 0);
+    }
+}
+
+@keyframes square4 {
+    0% {
+        transform: translate(0, 0);
+        background-color: #e79c10;
+    }
+
+    54.54545% {
+        transform: translate(0, 0);
+    }
+
+    63.63636% {
+        transform: translate(0, calc(100% + 2px));
+        background-color: #e79c10;
+    }
+
+    72.72727% {
+        background-color: #d53a33;
+    }
+
+    81.81818% {
+        background-color: #15668a;
+    }
+
+    90.90909% {
+        transform: translate(calc(-300% - 6px), calc(100% + 2px));
+        background-color: #97c900;
+    }
+
+    100% {
+        transform: translate(calc(-300% - 6px), 0);
+        background-color: #97c900;
+    }
+}
+
+/* https://juejin.cn/post/7020064738956705823 */
+/* loading.css */
+.spinner {
+    position: absolute;
+    width: 128px;
+    height: 128px;
+    top: calc(50% - 64px);
+    left: calc(50% - 64px);
+    transform: perspective(206px) rotateX(45deg);
+}
+
+.outer {
+    box-sizing: border-box;
+    animation: spin 3s linear infinite;
+    height: 100%;
+}
+
+.inner {
+    position: absolute;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    animation: spin 1.8s ease-in-out infinite;
+}
+
+.inner.tl {
+    top: 0;
+    left: 0;
+    border-top: 2px solid #531430;
+    border-left: 4px solid #531430;
+}
+
+.inner.tr {
+    top: 0;
+    right: 0;
+    border-top: 2px solid #e04960;
+    border-right: 4px solid #e04960;
+}
+
+.inner.br {
+    bottom: 0;
+    right: 0;
+    border-bottom: 2px solid #531430;
+    border-right: 4px solid #531430;
+}
+
+.inner.bl {
+    bottom: 0;
+    left: 0;
+    border-bottom: 2px solid #e04960;
+    border-left: 4px solid #e04960;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.my_label {
+    /* display属性规定元素应该生成的框的类型 inline-block行内块元素 */
+    display: inline-block;
+    /* height 属性设置元素的高度 */
+    /* height: 38px; */
+    /* line-height 属性设置行间的距离 */
+    line-height: 38px;
+    /* 内边距 */
+    padding: 0 18px;
+    /* 背景颜色 */
+    background-color: #009688;
+    /* 文本的颜色 */
+    color: #fff;
+    /* white-space 属性设置如何处理元素内的空白 */
+    /* nowrap 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止 */
+    white-space: nowrap;
+    /* text-align 属性规定元素中的文本的水平对齐方式 */
+    text-align: center;
+    font-size: 14px;
+    /* border 边框属性 宽度 样式 颜色*/
+    border: medium double rgb(250, 0, 255);
+    /* border-radius 属性是一个简写属性，用于设置四个 border-*-radius 属性 */
+    border-radius: 2px;
+    /* cursor 属性规定要显示的光标的类型（形状） */
+    cursor: pointer;
+}
+
+#droptarget {
+    width: 200px;
+    height: 150px;
+    line-height: 30px;
+    text-align: center;
+    /* vertical-align: middle; */
+
+    border: 6px yellow double;
+    /* color: rgb(47, 61, 255); */
+    /* https://juejin.cn/post/7034323356459466760?share_token=6eaaa948-5b8b-4145-b7ca-3bb58442c9a4 */
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12),
+        0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
+        0 16px 16px rgba(0, 0, 0, 0.12);
+    background-color: blueviolet;
+}
+
+/* https://juejin.cn/post/7029468162462580750?share_token=20b36a97-9794-401f-b55d-cbf14e567920 */
+@import url('https://fonts.googleapis.com/css?family=Raleway:200');
+
+body {
+    /* display: flex;
+            justify-content: center;
+            align-items: center; */
+    /* height: 100%;
+            background: #1D1F20;
+            color: white; */
+}
+
+#box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 南通中专学生综合素质评价报告自动生成工具3.19.1版 */
+    width: 376px;
+    /* height: 26px; */
+    font-family: 'Raleway';
+}
+
+.gradient-border {
+    --borderWidth: 3px;
+    background: #1d1f20;
+    position: relative;
+    border-radius: var(--borderWidth);
+}
+
+.gradient-border:after {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--borderWidth));
+    left: calc(-1 * var(--borderWidth));
+    height: calc(100% + var(--borderWidth) * 2);
+    width: calc(100% + var(--borderWidth) * 2);
+    background: linear-gradient(
+        60deg,
+        #f79533,
+        #f37055,
+        #ef4e7b,
+        #a166ab,
+        #5073b8,
+        #1098ad,
+        #07b39b,
+        #6fba82
+    );
+    border-radius: calc(2 * var(--borderWidth));
+    z-index: -1;
+    animation: animatedgradient 3s ease alternate infinite;
+    /* background-size: 100% 100%; */
+}
+
+@keyframes animatedgradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* https://juejin.cn/post/7086759520025706526?share_token=e4396797-3a26-4bdc-b0cb-aeb33daa6a4d */
+.card {
+    color: rgba(255, 255, 255, 0.8);
+    position: absolute;
+    right: 100px;
+    bottom: 100px;
+    z-index: 10;
+    font-family: sans-serif;
+    /* text-align: center; */
+    width: 300px;
+    height: 500px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    background: linear-gradient(
+        to top right,
+        rgba(90, 149, 207, 0.5),
+        rgba(58, 76, 99, 0.8)
+    );
+    box-shadow: 10px -10px 20px rgba(0, 0, 0, 0.2),
+        -10px 10px 20px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(6px);
+    border-radius: 20px;
+    transform: rotate(-15deg);
+}
+
+h1 {
+    margin-top: 10px;
+}
+
+h2 {
+    margin-top: 40px;
+}
+
+h3,
+h4 {
+    padding-left: 60px;
+    text-align: left;
+}
+
+h3 {
+    /* margin-top: 10px; */
+    /* text-transform: uppercase; */
+}
+
+h4 {
+    margin-top: -10px;
+}
+
+.circle {
+    width: 160px;
+    height: 160px;
+    position: absolute;
+    right: 240px;
+    bottom: 30px;
+    background: linear-gradient(to top left, rgb(135 116 249), rgb(75 162 237));
+    border-radius: 80px;
+}
+
+.rect {
+    width: 160px;
+    height: 160px;
+    position: absolute;
+    right: 20px;
+    bottom: 410px;
+    background: linear-gradient(
+        to top left,
+        rgba(135, 116, 249, 0.9),
+        rgba(75, 162, 237, 0.9)
+    );
+    border-radius: 20px;
+}
+
+/* https://juejin.cn/post/7026531307433754661 */
+.g-container {
+    width: 225px;
+    height: 25px;
+    border-radius: 25px;
+    background: #eee;
+}
+
+.g-progress {
+    height: inherit;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #0f0, #0ff 100%, transparent 0);
+}
+
+/* https://juejin.cn/post/7064404257436336135 */
+button {
+    animation: tada 0s;
+}
+
+button:hover {
+    animation-duration: 1s;
+}
+
+button:active {
+    animation: none;
+}
+
+@keyframes tada {
+    from {
+        transform: scale3d(1, 1, 1);
+    }
+
+    10%,
+    20% {
+        transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+    }
+
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+    }
+
+    40%,
+    60%,
+    80% {
+        transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+    }
+
+    to {
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+p {
+    margin-top: 10px;
+}
