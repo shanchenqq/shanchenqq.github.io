@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copyright © 2003-2022 shan</title>
+
+    <!-- 现代 CSS 解决方案：Modern CSS Reset https://juejin.cn/post/7086280551446888462 -->
+    <!-- D:\VSCode\ES\尚硅谷新版HTML5+CSS3\code\03_layout\10.默认样式.html -->
+    <!-- D:\VSCode\ES\尚硅谷新版HTML5+CSS3\练习\03_layout\p53默认样式.html -->
+    <link rel="stylesheet" href="./normalize.css">
+
+    <script src=" https://cdn.bootcdn.net/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/FileSaver.js/2.0.5/FileSaver.js"></script>
+
+    <!-- https://blog.csdn.net/qq_52940025/article/details/128133104 -->
+    <!-- <script src="https://unpkg.com/vue@3"></script> -->
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.3.4/vue.global.prod.js"></script>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/docxtemplater/3.31.2/docxtemplater.js"></script>
+    <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip.js"></script>
+    <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip-utils.js"></script>
+
+    <link rel="stylesheet" href="./mycss.css">
+
+    <!-- D:\VSCode\ES\尚硅谷新版HTML5+CSS3\精通CSS\练习\chapter-10\图10-26_3_1.html -->
+    <style>
+        /* 20230624去除翻页时的滚动条 */
+        body {
+            overflow: hidden;
+        }
+
+        /* 20230623不同浏览器p的上下外边距不同 */
+        p {
+            margin: 14px 0;
+            font-size: 16px;
+        }
+
+        /* 20230623 h2默认1.5em在不同浏览器中大小不一致 */
+        h2 {
+            font-size: 24px;
+        }
+
+        .disappear {
+            display: none;
+        }
+
+        .panel {
+            animation: s 2s;
+
+        }
+
+        @keyframes s {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0%);
+            }
+        }
+
+        /* https://juejin.cn/post/7105759052877348871 */
+        #my_button {
+            width: 4rem;
+            height: 2rem;
+            /* border-radius: 4rem; */
+            /* text-align: center; */
+            /* line-height: 2rem; */
+            background-color: rgba(0, 255, 255, 0.5);
+            cursor: pointer;
+            color: #fff;
+            font-size: 1.3rem;
+            border-radius: 40%/100%;
+        }
+
+        #my_button:hover {
+            background: linear-gradient(135deg, gold, cyan, red);
+            animation: _animate 4s linear infinite;
+        }
+
+        @keyframes _animate {
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        .menu-wrapper {
+            /* min-width: 9em; */
+            /* max-width: 30em; */
+            /* 20230623需要绝对大小 */
+            max-width: 600px;
+        }
+
+        /* 第一个div */
+        /* .menu {
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        } */
+
+        /* 第二个div */
+        /* .menu-settings {
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #eee;
+            margin: 10px 0 0;
+        } */
+
+        /* P308 P310 */
+        .flip-wrapper {
+            position: relative;
+
+            /* P309跨浏览器兼容 */
+            /* transition: transform .25s ease-in-out; */
+            /* P308 让子元素的变换与父元素在同一个三维空间中 */
+            /* transform-style: preserve-3d; */
+        }
+
+        /* P308 b面 */
+        .flip-b {
+            /* 脱离文档流,会看到b面 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+
+            /* P309跨浏览器兼容 */
+            /* 初始显示b的背面 */
+            /* transform: rotateY(-180deg); */
+        }
+
+        /* 让元素从背面看不到 */
+        .flip-b,
+        .flip-a {
+            backface-visibility: hidden;
+
+            /* P309跨浏览器兼容 */
+            /* ie10和ie11不支持preserve-3d,不能同时翻转整个部件的两面,必须分别给两面添加过渡 */
+            transition: transform 1s ease-in-out;
+        }
+
+        /* P309跨浏览器兼容 */
+        /* P309 p31复合选择器.html .flip-wrapper.is-flipped 中间没有空格 */
+        /* .csstransforms3d .flip-wrapper.is-flipped {
+                    transform: rotateY(180deg);
+                } */
+
+        .flip-a {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        .flip-b {
+            transform: perspective(1000px) rotateY(-180deg);
+        }
+
+        .flip-wrapper.is-flipped .flip-a {
+            transform: perspective(1000px) rotateY(180deg);
+        }
+
+        .flip-wrapper.is-flipped .flip-b {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        body {
+            perspective: 1000px;
+        }
+    </style>
+</head>
+
+<!-- 高设第3版P349 P356-->
+
+<body ondragenter='event.preventDefault()' ondragover='event.preventDefault()'>
+    <div class="loading">
+        <div class="loading-square"></div>
+        <div class="loading-square"></div>
+        <div class="loading-square"></div>
+        <div class="loading-square"></div>
+    </div>
+
+    <!-- https://juejin.cn/post/7020064738956705823 -->
+    <div class="spinner">
+        <div class="outer">
+            <div class="inner tl"></div>
+            <div class="inner tr"></div>
+            <div class="inner br"></div>
+            <div class="inner bl"></div>
+        </div>
+    </div>
+
+    <div class="flip-wrapper menu-wrapper" id='my_div'>
+        <!-- a面 -->
+        <div id="app1" class="flip-a menu">
+            <div class="gradient-border" id="box">
+                <p>南通中专学生综合素质评价报告自动生成工具5.20版</p>
+            </div>
+
+            <div>
+                <p style="color:red;font-weight:bold;">第一步: 设置必要信息</p>
+                <p>①放假及开学时间: </p>
+                <!-- https://blog.csdn.net/weixin_39784070/article/details/78456295 -->
+                <!-- https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/textarea#attr-wrap -->
+                <!-- https://cn.vuejs.org/guide/essentials/forms.html#multiline-text -->
+                <textarea type="text" placeholder="请输入放假及开学时间" v-model="addInfo.start" rows="4" cols="34" style='resize: none;' warp='hard' disabled></textarea>
+                <p>②综合素质评价等级默认: </p>
+                <p>--综合素质评价等级默认《优秀》--打
+                    <span :style="{color: pick==='excellent' ? 'red' : 'green', fontWeight: 'bold'}">√</span>
+                    <input type="radio" v-model="pick" value="excellent" />
+                </p>
+                <p>--综合素质评价等级默认《良好》--打
+                    <span :style="{color: pick==='good' ? 'red' : 'yellowgreen',fontWeight:'bold'}">√</span>
+                    <input type="radio" v-model="pick" value="good" />
+                </p>
+                <p>③是否自动排序课程: </p>
+                <p>--《自动》排序课程 --打<span :style="{color: isAutomaticSort ? 'red' : 'green', fontWeight: 'bold'}">√</span>
+                    <!-- https://cn.vuejs.org/guide/essentials/forms.html#value-bindings -->
+                    <input type="radio" v-model="isAutomaticSort" :value='true' />
+                </p>
+                <p>--《不自动》排序课程 --打<span :style="{color: !isAutomaticSort ? ' red' : 'yellowgreen' ,fontWeight:'bold'}">√</span>
+                    <input type="radio" v-model="isAutomaticSort" :value='false' />
+                </p>
+            </div>
+
+            <div>
+                <p style="color:red;font-weight:bold;">第二步: 直接拖入相关Excel表格</p>
+                <label class="my_label" @change='handleFile'>
+                    <!-- https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/Input/file#attr-accept -->
+                    <!-- https://juejin.cn/post/7063110398945280013 -->
+                    <!-- https://juejin.cn/post/7224402365452238906 -->
+                    <input type="file" hidden multiple accept=".xlsx,.xls" webkitdirectory />
+                    点击选取成绩表、德育学分表、评语表(可选)、追加表(可选)所在的文件夹
+                </label>
+                <p id="droptarget" @drop='handleFile'>
+                    拖入成绩表、<br>
+                    德育学分表、<br>
+                    评语表(可选)、<br>
+                    追加表(可选)
+                </p>
+            </div>
+
+            <div>
+                <p style="color:red;font-weight:bold;">第三步: 先点击获取整合数据,再点击开始制作</p>
+
+                <!-- <div id='show' style='visibility:hidden'> -->
+                <div id='show' style='display:none'>
+                    <p v-if='isComments' style='color:green'>当前上传了评语表</p>
+                    <p v-else style='color:red'>当前没有上传评语表,请输入班主任姓名: <input type='text' placeholder="班主任姓名" v-model="addInfo.teacher" style='width:85px' /></p>
+                </div>
+
+                <span style="color:white;font: 20px bold;" v-if="messages&&(n<=messages.length-1)">当前完成进度: {{ n===-1 ? 0 : Math.floor(100*n/(messages.length-1)) }}%</span>
+                <span style="color:yellowgreen;font: 20px bold;" v-if="messages&&(n>=messages.length-1)">
+                    已经全部完成啦~~~~~~做束光照亮你温暖你~为您节省下来的每一秒都会使我快乐!
+                </span>
+                <!-- 进度条 -->
+                <div class="g-container"
+                    v-if="messages&&(n<=messages.length-1)">
+                    <div
+                        class="g-progress"
+                        :style="`width:${225*(n+1)/messages.length}px`">
+                    </div>
+                </div>
+                <p style="color:#0f0">{{info}}</p>
+                <button @click="fetchMessages" class="my_label">获取整合数据</button>&nbsp
+                <button @click="initiate" class="my_label">开始制作</button>
+            </div>
+
+            <p style="color:gold">Copyright © 2003-2022 shanchen All Rights Reserved. 版本号: 5.20</p>
+        </div>
+        <!-- b面 -->
+        <div id="app2" class="flip-b menu-settings">
+            <div class="gradient-border" id="box">
+                <p>南通中专学生学籍表自动生成工具1.0版</p>
+            </div>
+
+            <div>
+                <p style="color:red;font-weight:bold;">第一步: 设置必要信息</p>
+                <p>采用高职班学籍表模板或中职班学籍表模板: </p>
+                <p>--高职班学籍表模板--打
+                    <span :style="{color:pick==='high'?'red':'green',fontWeight:'bold'}">√</span>
+                    <input type="radio" v-model="pick" value="high" />
+                </p>
+                <p>--中职班学籍表模板--打
+                    <span :style="{color:pick==='low'?'red':'yellowgreen',fontWeight:'bold'}">√</span>
+                    <input type="radio" v-model="pick" value="low" />
+                </p>
+            </div>
+
+            <div>
+                <p style="color:red;font-weight:bold;">第二步: 直接拖入相关Excel表格</p>
+                <label class="my_label" @change='handleFile'>
+                    <!-- https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/Input/file#attr-accept -->
+                    <!-- https://juejin.cn/post/7063110398945280013 -->
+                    <!-- https://juejin.cn/post/7224402365452238906 -->
+                    <!-- 还不知道怎么用Javascript判断文件类型吗？https://juejin.cn/post/7252344306191253541 -->
+                    <input type="file" hidden multiple accept=".xlsx,.xls" webkitdirectory />
+                    点击选取学期成绩总表、学籍信息收集表、5个或3个学年的评语表所在的文件夹
+                </label>
+                <p id="droptarget" @drop='handleFile'>
+                    拖入学期成绩总表、<br>
+                    学籍信息收集表、<br>
+                    5个或3个学年的评语表<br>
+                </p>
+            </div>
+
+            <div>
+                <p style="color:red;font-weight:bold;">第三步: 先点击获取整合数据,再点击开始制作</p>
+
+                <!-- https://cn.vuejs.org/guide/essentials/conditional.html#v-if-vs-v-show -->
+                <div v-if='JSON.stringify(courseNameObj) !== "{}"'>
+                    <p style="color:green;">
+                        如果需要打印,请点击显示,把下列课程名称修改到不超过10个字的范围:
+                        <button @click="value = value==='none'?'block' : 'none'">显示/隐藏</button>
+                    </p>
+                    <!-- https://zhuanlan.zhihu.com/p/368014069?utm_id=0 -->
+                    <!-- https://cn.vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for -->
+                    <!-- <div id='show' style='visibility:hidden'> -->
+                    <!-- https://cn.vuejs.org/guide/essentials/class-and-style.html#binding-inline-styles -->
+                    <div :style="{display:value}">
+                        <ul>
+                            <!-- https://cn.vuejs.org/guide/essentials/list.html#v-for-with-an-object -->
+                            <template v-for="value,name in courseNameObj" :key="name">
+                                <li v-if="name.length>10">
+                                    {{ name }}<input v-model='courseNameObj[name]'></input>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                    <button @click="handle">保存修改</button>
+                </div>
+
+                <span
+                    style="color:white;font: 20px bold;"
+                    v-if="messages&&(n<=messages.length-1)">当前完成进度: {{ n===-1 ? 0 : Math.floor(100*n/(messages.length-1)) }}%
+                </span>
+                <span
+                    style="color:yellowgreen;font: 20px bold;"
+                    v-if="messages&&(n>=messages.length-1)">
+                    已经全部完成啦~~~~~~做束光照亮你温暖你~为您节省下来的每一秒都会使我快乐!
+                </span>
+                <!-- 进度条 -->
+                <div class="g-container"
+                    v-if="messages&&(n<=messages.length-1)">
+                    <div
+                        class="g-progress"
+                        :style="`width:${225*(n+1)/messages.length}px`">
+                    </div>
+                </div>
+                <p style="color:#0f0">{{info}}</p>
+                <button @click="fetchMessages" class="my_label">获取整合数据</button>&nbsp
+                <button @click="initiate" class="my_label">开始制作</button>
+                <!-- <button @click="generate(messages[0])" class="my_label">开始制作</button> -->
+            </div>
+
+            <p style="color:gold">Copyright © 2003-2022 shanchen All Rights Reserved. 版本号: 1.0</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="word">
+            <!-- <h1>君子慎独,不欺暗室,卑以自牧,含章可贞.</h1>
+                <h2>意: 即使别人看不见、听不见，也要谨慎不苟，不做违反道德法律之事，不负良知，不欺内心。</h2>
+                <h3>《礼记中庸》</h3> -->
+            <h2>你要写匆匆,就不能只写匆匆,</h2>
+            <h2>要写,水阔写山重,写飞絮流云西复东,写时光挪移过指缝,</h2>
+            <h2>要写,金樽对月空,写朝来寒雨晚来风,写几回魂梦与君同,</h2>
+            <h2>再写,今年花胜去年红,青丝变白发,人生长恨水长东！</h2>
+            <h2>2022 / 07 / 31</h2>
+        </div>
+    </div>
+    <div class="circle"></div>
+    <div class="rect"></div>
+
+    <div class='myAdditional'>
+        <button id="my_button">切换</button><br><br>
+
+        <!-- https://blog.csdn.net/zhangvalue/article/details/104321024 -->
+        <audio autoplay="autoplay" loop="loop" controls="controls">
+            <source src="./还是朋友.mp3" type="audio/mpeg">
+        </audio><br>
+
+        <div id='my_Quality_report' class='panel'>
+            <!-- https://juejin.cn/post/7244818202214416443 -->
+            <!-- https://blog.csdn.net/My_Serendipity/article/details/111823599 -->
+            <!-- https://gitee.com/oschina/git-osc/issues/I2C4TS?from=project-issue -->
+            <!-- https://blog.csdn.net/qq_40728285/article/details/80200609 -->
+            <!-- <video width="320" height="240" controls>
+            <source src="./shipin.mp4" type="video/mp4">
+            <source src="./shipin2.avi" type="video/avi">
+            <source src="./shipin3.mov" type="video/quicktime">
+            </video> -->
+            <a href="https://share.weiyun.com/fI0M7uNa">综合素质评价报告自动生成工具操作解说视频下载</a><br>
+
+            <a href="https://share.weiyun.com/UwsC6kBv">一键word转pdf模板下载</a><br>
+            <a href="https://share.weiyun.com/yhVT8VdN">一键word转pdf使用视频下载</a>
+
+            <p>
+                <<第四步: 可选操作>>
+            </p>
+            <a href="https://share.weiyun.com/emL8d2nj">对excel中的课程排序的视频下载(时长1'30)</a><br>
+            <a href="https://share.weiyun.com/xFZ95qCf">手写字体下载</a>
+
+            <p>
+                <<新生补充信息相关>>
+            </p>
+            <a href="https://share.weiyun.com/hyd5kBf8">新生补充信息收集说明.docx</a><br>
+            <a href="https://share.weiyun.com/irA37EWV">补充信息模板.xlsx</a>
+
+            <p>
+                <<推荐使用的浏览器>>
+            </p>
+            <a href="https://www.microsoft.com/zh-cn/edge/download?form=MA13FJ">Edge浏览器官网下载</a><br>
+            <a href="https://www.google.cn/chrome/?platform=win64&standalone=1">Chrome浏览器官网下载</a><br>
+            <a href="http://www.firefox.com.cn/">Firefox浏览器官网下载</a>
+        </div>
+        <div id='my_Student_roll' class="disappear panel">
+            <p>
+                <<敬请期待>>
+            </p>
+            <!-- D:\VSCode\ES\尚硅谷新版HTML5+CSS3\练习\01_introduce\p22超链接.html -->
+            <a href="#">学籍表自动生成工具操作解说视频下载</a>
+        </div>
+    </div>
+
+</body>
+
+<script type='module'>
+    import Quality_report from './Quality_report.js'
+    import Student_roll from './Student_roll.js'
+
+    const app1 = Vue.createApp(Quality_report)
+    const vm1 = app1.mount('#app1')
+
+    const app2 = Vue.createApp(Student_roll)
+    const vm2 = app2.mount('#app2')
+
+    my_button.addEventListener("click", () => {
+        my_div.classList.toggle('is-flipped')
+        //https://blog.csdn.net/weixin_43294560/article/details/112140336
+        my_Quality_report.classList.toggle('disappear')
+        my_Student_roll.classList.toggle('disappear')
+    })
+</script>
+
+</html>
