@@ -16,7 +16,7 @@ export default {
                 teacher: '',
             },
             isComments: false, //判断是否上传了评语表
-            info: '👇🏻先点击获取整合数据,再点击开始制作', //获取整合数据按钮的交互
+            // info: '👇🏻先点击获取整合数据,再点击开始制作', //获取整合数据按钮的交互
             isAutomaticSort: true, //默认自动排序
         }
     },
@@ -647,11 +647,11 @@ export default {
                 // } catch (error) {
                 //     console.log(error)
                 // }
-                ;[this.addInfo.g, this.addInfo.e] =
-                    newValue === 'good' ? ['√', ''] : ['', '√']
+                /* ;[this.addInfo.g, this.addInfo.e] =
+                    newValue === 'good' ? ['√', ''] : ['', '√'] */
 
-                console.log([this.addInfo.g, this.addInfo.e])
-                console.log(window.devicePixelRatio)
+                /* console.log([this.addInfo.g, this.addInfo.e])
+                console.log(window.devicePixelRatio) */
                 // if (window.devicePixelRatio != 1.3) {
                 //     document.body.style.zoom = 1.3
                 // }
